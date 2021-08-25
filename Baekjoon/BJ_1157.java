@@ -18,7 +18,7 @@ public class BJ_1157 {
 		for(int i = 0; i < 26; i++) {
 			count[i] = 0;				//초기화
 		}
-		for(int i = 0; i < S.length(); i++) {
+		for(int i = 0; i < S.length(); i++) {	//알파벳 갯수 세기 반복문
 			switch(S.charAt(i)) {
 			case 'A':
 				count[0]++;
@@ -100,13 +100,103 @@ public class BJ_1157 {
 				break;
 			}
 		}
-		int max1 = 0;
-		int max2 = 0;
-		for(int i = 0; i < 26; i++) {
-			for(int j = 0; j < 26; j++) {
-				
+		int max = 0;						//사용된 갯수 파악 max
+		int max_int = 26;					//case문을 위한 인자
+		boolean bool = true;				//많이 사용된 알파벳이 2개 있을 시 false
+		for(int i = 0; i < 26; i++) { 		//많이사용된 알파벳 알아보는 반복문
+			if(count[i] != 0 && count[i] >= max) {
+				if(max == count[i]) {
+					bool = false; 		//중복된 것.
+				} else {
+					max = count[i];
+					max_int = i;
+					bool = true;
+				}
 			}
 		}
+		if(bool) {
+			switch(max_int) {
+			case 0:
+				System.out.println("A");
+				break;
+			case 1:
+				System.out.println("B");
+				break;
+			case 2:
+				System.out.println("C");
+				break;
+			case 3:
+				System.out.println("D");
+				break;
+			case 4:
+				System.out.println("E");
+				break;
+			case 5:
+				System.out.println("F");
+				break;
+			case 6:
+				System.out.println("G");
+				break;
+			case 7:
+				System.out.println("H");
+				break;
+			case 8:
+				System.out.println("I");
+				break;
+			case 9:
+				System.out.println("J");
+				break;
+			case 10:
+				System.out.println("K");
+				break;
+			case 11:
+				System.out.println("L");
+				break;
+			case 12:
+				System.out.println("M");
+				break;
+			case 13:
+				System.out.println("N");
+				break;
+			case 14:
+				System.out.println("O");
+				break;
+			case 15:
+				System.out.println("P");
+				break;
+			case 16:
+				System.out.println("Q");
+				break;
+			case 17:
+				System.out.println("R");
+				break;
+			case 18:
+				System.out.println("S");
+				break;
+			case 19:
+				System.out.println("T");
+				break;
+			case 20:
+				System.out.println("U");
+				break;
+			case 21:
+				System.out.println("V");
+				break;
+			case 22:
+				System.out.println("W");
+				break;
+			case 23:
+				System.out.println("X");
+				break;
+			case 24:
+				System.out.println("Y");
+				break;
+			case 25:
+				System.out.println("Z");
+				break;
+			}
+		} else
+			System.out.println("?");
 		
 	}
 }
