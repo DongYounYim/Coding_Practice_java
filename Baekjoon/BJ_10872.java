@@ -19,9 +19,9 @@ public class BJ_10872 {
 	public static int facto(int N) {
 		if(N == 0) {
 			return 1;
-		} else if(N != 1) {
-			return N * facto(N-1);
+		} else if(N == 1) {
+			return N * 1;
 		}
-		return N * 1;
+		return N * facto(N-1);
 	}
 }
