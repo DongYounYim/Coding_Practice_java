@@ -11,16 +11,36 @@ n을 d(n)의 생성자라고 한다. 위의 수열에서 33은 39의 생성자이고, 39는 51의 생성자
 
 public class BJ_4673 {
 	public static void main(String args[]) {
-		self_number(10000);
+		int[] S_N = new int[10001];
+		S_N[0] = 0;
+		for(int i = 0; i < 10001; i++) {
+			S_N[i] = i;
+		}	//배열에 모든 숫자 집어넣음
+		for(int i = 1; i < 10000; i++) {
+			int j = i;
+			while(j < 10000) {
+				j = d(j);
+				if(j < 10000) {			//ArrayIndexOutOfBoundsException 방지
+					S_N[j] = 0;			//셀프넘버가 아닌것은 0으로 변환
+				}
+			}
+			if(S_N[i] != 0) {
+				System.out.println(S_N[i]);
+			}
+		}
 	}
 	
-	public static int self_number(int a) {
-		int self_num[] = new int[a];
-		for(int i = 1; i <= a; i++) {
-			self_num[i-1] = i;
-		}									//a 이하 값의 배열 숫자 초기화 1~a
-		int n[];
-		
-		return 0;
+	
+	//그 수와 자릿수 합으로 만들어지는 수는 non_selfnumber 
+	public static int d(int a) {
+		int result = a;
+		int temp = a%10;
+		result = result + temp;
+		while(a/10 != 0) {		//일의 자리만 남을때 까지 반복
+			a = a/10; 			//일의 자리 제거
+			temp = a%10; 		//새로운 일의 자리 (십,백,천의자리)
+			result = result + temp;
+		}
+		return result;
 	}
 }
