@@ -11,42 +11,34 @@ import java.util.*;
 public class BJ_10250 {
 	public static void main(String args[]) {
 		Scanner sc= new Scanner(System.in);
-		int T = sc.nextInt(); 				//Testcase의 갯수
-		int[][] Hotel;
+		int T = sc.nextInt(); 				//Test case 갯수
+		int H, W, N;
 		for(int i = 0; i < T; i++) {
-			int temp = 0;					//초기화
+			H = sc.nextInt();
+			W = sc.nextInt();
+			N = sc.nextInt();
 			int count = 0;
-			int H = sc.nextInt();			//각 층의 방
-			int W = sc.nextInt();			//호텔의 층수
-			int N = sc.nextInt();			//몇번째 손님인지
-			Hotel = mkroom(W, H);
-			for(int j = 0; j < N; j++) {
-				temp = j;
-				if(temp%H == 0 && temp != 0) {
+			boolean a = false;				//이중 break를 위한 boolean변수
+			int j, k;
+			for(j = 1; j <= W; j++) {		//j는 호수
+				for(k = 1; k <= H; k++) {	//k는 층수
 					count++;
+					if(N == count) {
+						if(j < 10) {		//j가 10보다 작을때 앞에 0을 붙인다
+							System.out.printf("%d0%d\n", k, j);
+							a = true;
+							break;
+						} else {
+							System.out.printf("%d%d\n", k, j);
+							a = true;
+							break;
+						}
+					}
 				}
-			}
-			temp = temp - H * count; 
-			System.out.println(Hotel[temp][count]);
-			//Hotel[
-		}
-		
-	}
-	
-	public static int[][] mkroom(int a, int b) {
-		int[][] Hotel = new int[a][b];
-		String temp;
-		for(int j = 0; j < b; j++) {
-			for(int i = 0; i < a; i++) {
-				//천과 , 백의자리는 층수, 십,일의자리는 방 수에 맞춰 올라간다.
-				if(j < 10) {		//index가 0부터 시작이라 +1씩 해줌
-					temp = Integer.toString(i+1) + "0" + Integer.toString(j+1);
-				} else
-					temp = Integer.toString(i+1) + Integer.toString(j+1);
-				Hotel[i][j] = Integer.parseInt(temp);
+				if(a == true) 
+					break;
 			}
 		}
-		return Hotel;
 	}
 
 }
