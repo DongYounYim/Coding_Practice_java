@@ -14,31 +14,18 @@ public class BJ_11653 {
 			//아무것도 출력하지 않는다.
 		} else {
 			while(true) {
-				int prime = vid(N);			//소수이며 N을 나눌 수 있는 값 prime에 저장(N이 소수여도 포함)
-				System.out.println(prime);	
-				if(isPrime(N)) {			//N이 소수이면 루프 탈출
+				if(N == 1) {					//소인수분해 완료시 루프 탈출
 					break;
-				} else {
-					N /= prime;				//소수가 아니면 찾은 소수로 나누고 loop진행
+				}
+				for(int i = 2; i <= N; i++) {	//어차피 소수로 못나누면 소수가 아닌걸로도 못나눔
+					if(N%i == 0) {
+						System.out.println(i);
+						N /= i;
+						break;					//다시 2부터 돌릴 수 있게 루프 탈출
+					}
 				}
 			}
 		}
 	}
- 	
-	public static boolean isPrime(int n) {			//소수 확인하는 함수
-		for(int i = 2; i*i <= n; i++) {			//소수확인하는 최소시간 알고리즘 : 시간복잡도(루트N)
-			if(n%i == 0) 
-				return false;
-		}
-		return true;
-	}
 	
-	public static int vid(int N) {				//가장 작은 수부터 찾음
-		for(int i = 2; i <= N/2; i++) {			//N의 절반 이상의 값은 나눌 수 없다.
-			if(isPrime(i) && N%i == 0) {
-				return i;
-			}
-		}
-		return N;
-	}
 }
