@@ -10,30 +10,35 @@ public class BJ_11653 {
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
-		ArrayList<Integer> temp_lst = new ArrayList<Integer>();		//배열의 크기 지정안하는 배열
-		for(int i = 2; i < N/2; i++) {
-			if(isPrime(i) && N%i == 0) {
-				N = N/i;
-				temp_lst.add(i);
-				if(i != N)										//마지막에 남은 N을 추가하기 때문에 
-					i--;
+		if(N == 1) {
+			//아무것도 출력하지 않는다.
+		} else {
+			while(true) {
+				int prime = vid(N);			//소수이며 N을 나눌 수 있는 값 prime에 저장(N이 소수여도 포함)
+				System.out.println(prime);	
+				if(isPrime(N)) {			//N이 소수이면 루프 탈출
+					break;
+				} else {
+					N /= prime;				//소수가 아니면 찾은 소수로 나누고 loop진행
+				}
 			}
-		}
-		temp_lst.add(N);										//소인수분해 끝나고 남은 N
-		for(int i = 0; i < temp_lst.size(); i++) {				//length대신 size()
-			if(N == 1) {
-				//1일 땐 아무것도 출력하지 않는다
-			}
-			else 
-				System.out.println(temp_lst.get(i));				//받을 때 get메소드 이용
 		}
 	}
  	
 	public static boolean isPrime(int n) {			//소수 확인하는 함수
-		for(int i = 2; i < n/2; i++) {
+		for(int i = 2; i*i <= n; i++) {			//소수확인하는 최소시간 알고리즘 : 시간복잡도(루트N)
 			if(n%i == 0) 
 				return false;
 		}
 		return true;
+	}
+	
+	public static int vid(int N) {				//가장 작은 수부터 찾음
+		for(int i = 2; i <= N/2; i++) {			//N의 절반 이상의 값은 나눌 수 없다.
+			if(isPrime(i) && N%i == 0) {
+				return i;
+			}
+		}
+		return N;
 	}
 }
