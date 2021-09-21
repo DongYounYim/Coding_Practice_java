@@ -15,14 +15,13 @@ import java.util.*;
  */
 
 public class BJ_1011 {
-	static int count = 1; // 카운터도 최소 1부터 시작해서 1부터 시작. 함수에서도 건들꺼라 전역변수로 한다.
-
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
 		int T = sc.nextInt();
 		int[] go = { 0, 1, 2 }; // 처음에 무조건 1을 이동한다고 가정
 		int x;
 		int y;
+		int count = 1;
 		for (int i = 0; i < T; i++) {
 			x = sc.nextInt();
 			y = sc.nextInt();
@@ -36,38 +35,28 @@ public class BJ_1011 {
 				} else if (distan == 2) { // 거리가 3 이동할 때, 무조건 1만큼 두 번 이동하고 끝나야함
 					count = count + 2;
 					break;
-				} else if (distan > add_1(go[2])) { // 거리 4이상 이동할 때 적용
-					// 목적지까지 이동거리부터 1을 이동할 수 있을 때까지 보다 거리가 남으면 무조건 최대거리 이동
-					int temp = count; // 함수에서 count 건드리기 전을 기억했다
-					if (distan == add_2(go[2])) { // 탈출 조건
-						// 목적지까지 이동거리가 현재 최대값부터 두칸씩 내려갔을 때 딱 맞으면 그게 최대 거리
-						// 함수에서 count 올리는거 처리했으니까 끝낸다
+				} else { // 거리 4이상 이동할 때 적용
+					if(distan > add(go[2])) {	//현재 이동 최대값부터 1까지 더할때 까지보다 distan이 크면 무조건 최대값 이동.
+						distan -= go[2];
+						count++;
+						arr_(go, 1);
+					} else if(distan == add(go[2])) {	//최대 값 부터 1까지 더할때까지와 딱 맞아떨어지면? 최대값이 5다 그럼 5 4 3 2 1로 딱 떨어질꺼 아냐 그럼 count가 딱 5네
+						count = count + go[2];
 						break;
-					} else {
-						count = temp; // 함수에서 카운트 건드렸는데 탈출안하면 카운트 원래대로 돌린다.
-					}
-					distan -= go[2];
-					arr_(go, 1); // 배열안의 값 1씩 증가
-					count++;
-				} else {
-					int temp = count;
-					if (distan == add_2(go[2])) { // 탈출 조건
-						// 목적지까지 이동거리가 현재 최대값부터 두칸씩 내려갔을 때 딱 맞으면 그게 최대 거리
-						// 함수에서 count 올리는거 처리했으니까 끝낸다
+					} else if(distan > add(go[1])) {
+						distan -= go[1];
+						count++;
+					} else if(distan == add(go[1])) {
+						count = count + go[1];
 						break;
-					} else {
-						count = temp; // 함수에서 카운트 건드렸는데 탈출안하면 카운트 원래대로 돌린다.
-					}
-					if (distan == add_2(go[1])) {	// 하나만 걸려라?
+					} else if(distan > add(go[0])) {
+						distan -= go[0];
+						count++;
+						arr_(go, -1);
+					} else if(distan == add(go[0])) {
+						count = count + go[0];
 						break;
-					} else {
-						count = temp;
-					}
-					if (distan == add_2(go[0])) {	// 하나만 걸려라?
-						break;
-					} else {
-						count = temp;
-					}
+					} 
 				}
 
 			}
@@ -76,7 +65,6 @@ public class BJ_1011 {
 		}
 
 	}
-	// 값이 올라갈 땐 1칸씩이지만 내려갈 땐 2칸씩 내려갈 수 있네 ;;
 	// 남은 거리는 배열의 마지막의 N부터 1까지 더한다.
 	// 처음에 1을 이동하면 {0, 1, 2}
 	// 그 다음 2를 이동하면 {1, 2, 3}
@@ -85,31 +73,12 @@ public class BJ_1011 {
 	// 만약 4를 이동했따 {3, 4, 5} 5+4+3+2+1 = 15
 	// 시간초과 났다요
 
-	public static int add_1(int n) { // n부터 1까지의 합
+	public static int add(int n) { // n부터 1까지의 합
 		int s = 0;
 		for (int i = 1; i <= n; i++) {
 			s += i;
 		}
 		return s;
-	}
-
-	public static int add_2(int n) { // 홀짝 구분해서... (결과가 무조건 홀수가 나와서 곤란) distan이 홀수 일때 마지막에 1을 더 더해줘야 할듯
-		int s = 0;
-		if (n % 2 == 0) { // 짝수
-			for (int i = 2; i <= n; i = i + 2) {
-				s += i;
-				count++;
-			}
-			s++; // 마지막 1추가
-			count++;
-			return s;
-		} else { // 홀수
-			for (int i = 1; i <= n; i = i + 2) {
-				s += i;
-				count++; // 마지막 1 자연스럽게 추가된 것
-			}
-			return s;
-		}
 	}
 
 	public static void arr_(int[] a, int nu) { // 배열변동
