@@ -1,4 +1,5 @@
 package Baekjoon;
+
 import java.util.*;
 
 /*우리는 사람의 덩치를 키와 몸무게, 이 두 개의 값으로 표현하여 그 등수를 매겨보려고 한다. 어떤 사람의 몸무게가 x kg이고 키가 y cm라면 이 사람의 덩치는 (x, y)로 표시된다. 
@@ -20,77 +21,34 @@ public class BJ_7568 {
 		int temp = 0;
 		boolean hastemp = false;
 		for (int i = 0; i < h.length; i++) { // 초기화
-			h[i] = new Human(sc.nextInt(), sc.nextInt(), rank, i);
+			h[i] = new Human(sc.nextInt(), sc.nextInt(), rank);
 		}
-		sort(h);
-		for (int i = 0; i < N-1; i++) {
-			if (h[i].getHeight() > h[i+1].getHeight() && h[i].getWeight() > h[i+1].getWeight()) {
-				if(hastemp) {	//순위구분이 된다
-					h[i].setRank(rank);
-					rank += temp;
-					temp = 0;
-					hastemp = false;
-				} else {
-					h[i].setRank(rank);
-					rank++;
+		for (int i = 0; i < h.length; i++) {
+			int plus_rank = 0;
+			for (int j = 0; j < h.length; j++) {
+				if (h[i].getHeight() < h[j].getHeight() && h[i].getWeight() < h[j].getWeight()) {
+					plus_rank++;
 				}
-			} else		//순위 구분이 안된다.
-				h[i].setRank(rank);
-				hastemp = true;
-				temp++;
+			}
+			h[i].setRank(rank + plus_rank);
+		}
 
-		}
-		// 마지막 자리수 비교
-		if(h[h.length - 2].getHeight() > h[h.length - 1].getHeight() 
-				&& h[h.length - 2].getWeight() > h[h.length - 1].getWeight()) {
-			h[h.length-1].setRank(rank);
-		} else {
-			h[h.length-1].setRank(rank + temp);
-		}
-		//여기까진 정렬되어있는상태임
-		pre_order(h);
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < h.length; i++) {
 			System.out.println(h[i].getRank());
 		}
-
 	}
 
-	public static void sort(Human[] h) {		//소팅
-		for (int i = 0; i < h.length; i++) {
-			for (int j = i+1; j < h.length; j++) { // 우선 임시 소팅
-				if (h[i].getHeight() < h[j].getHeight() && h[i].getWeight() < h[j].getWeight()) {
-					Human h1 = h[i];
-					h[i] = h[j];
-					h[j] = h1;
-				}
-			}
-		}
-	}
-	
-	public static void pre_order(Human[] h) {	//배열 원래대로 돌리기
-		for(int i = 0; i < h.length; i++) {
-			for(int j = i+1; j < h.length; j++) {
-				if(h[i].getOrder() > h[j].getOrder()) {
-					Human h1 = h[i];
-					h[i] = h[j];
-					h[j] = h1;
-				}
-			}
-		}
-	}
 }
 
 class Human {
 	int height;
 	int weight;
 	int rank;
-	int order; // 원래순서
 
-	public Human(int height, int weight, int rank, int order) { // 생성자
+	public Human(int height, int weight, int rank) { // 생성자
 		this.height = height;
 		this.weight = weight;
 		this.rank = rank;
-		this.order = order;
 	}
 
 	public int getHeight() {
@@ -104,10 +62,6 @@ class Human {
 	public int getRank() {
 		return rank;
 	}
-	
-	public int getOrder() {
-		return order;
-	}
 
 	public void setHeight(int height) {
 		this.height = height;
@@ -119,10 +73,6 @@ class Human {
 
 	public void setRank(int rank) {
 		this.rank = rank;
-	}
-	
-	public void setOrder(int order) {
-		this.order = order;
 	}
 
 }
