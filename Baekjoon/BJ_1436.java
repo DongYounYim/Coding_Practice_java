@@ -1,5 +1,6 @@
 package Baekjoon;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /*666은 종말을 나타내는 숫자라고 한다. 따라서, 많은 블록버스터 영화에서는 666이 들어간 제목을 많이 사용한다. 영화감독 숌은 세상의 종말 이라는 시리즈 영화의 감독이다. 
  *조지 루카스는 스타워즈를 만들 때, 스타워즈 1, 스타워즈 2, 스타워즈 3, 스타워즈 4, 스타워즈 5, 스타워즈 6과 같이 이름을 지었고, 피터 잭슨은 반지의 제왕을 만들 때, 반지의 제왕 1, 반지의 제왕 2, 반지의 제왕 3과 같이 영화 제목을 지었다.
@@ -14,26 +15,30 @@ import java.util.*;
 public class BJ_1436 {
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
-		//int N = sc.nextInt();
+		int N = sc.nextInt();
 		int result = 0;
 		int count = 0;
 		int i = 666;
-		int temp = 1666;
+		
+		//정규식을 이용해보자
+		String pattern = "^\\d*[6-6]{3,}\\d*$";		//정규식의 해석 앞에 숫자가 없음 또는 한개 이상 6이 반복 최소 3번 뒤에 숫자 없음 또는 한개이상
+
+		/*int temp = 1666;
 		int j = 796;
 		int k = 6661;
 		int y = 6666;
 		int max = 66661;
-		//정규식을 이용해보자
-		String pattern = "^*\\w6{3}$";
+		int last = 63661;
 		System.out.println(Integer.toString(i).matches(pattern));
 		System.out.println(Integer.toString(temp).matches(pattern));
 		System.out.println(Integer.toString(j).matches(pattern));
 		System.out.println(Integer.toString(k).matches(pattern));
 		System.out.println(Integer.toString(y).matches(pattern));
 		System.out.println(Integer.toString(max).matches(pattern));
+		System.out.println(Integer.toString(last).matches(pattern)); */ //정규식 테스트 
 		
-		
-		/*while(true) {
+		//메모리 초과...
+		while(true) {
 			if(Integer.toString(i).matches(pattern)) {
 				count++;
 				result = i;
@@ -45,6 +50,6 @@ public class BJ_1436 {
 				break;
 			}
 			i++;		//정규식에 맞든 안맞든 일단 i는 하나씩 올림 부르트포스 알고리즘
-		}*/
+		}
 	}
 }
