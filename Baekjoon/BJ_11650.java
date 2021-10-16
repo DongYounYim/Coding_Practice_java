@@ -20,7 +20,15 @@ public class BJ_11650 {
 			}
 		}
 		br.close();
-		sort(xy, N);
+		Arrays.sort(xy, new Comparator<int[]>() {	//Comparator를 이용한 2차원 배열 정렬
+			@Override
+			public int compare(int[] t1, int[] t2) {
+				if(t1[0] == t2[0])					//앞의 값이 같으면 뒤에 값을 비교
+					return t1[1] - t2[1];			//오름차순 (내림차순이면 t2[1] - t1[1];
+				else
+					return t1[0] - t2[0];
+			}
+		});
 		for(int i = 0; i < N; i++) {		//정렬된 좌표 출력
 			bw.write(xy[i][0] + " " + xy[i][1]);
 			bw.newLine();
@@ -28,21 +36,6 @@ public class BJ_11650 {
 		bw.flush();
 		bw.close();
 		
-	}
-	
-	public static void sort(int[][] a, int N) {
-		for(int i = 0; i < N; i++) {
-			for(int j = i+1; j < N; j++) {
-				if(a[i][0] > a[j][0] || (a[i][0] == a[j][0] && a[i][1] > a[j][1])) {			//x 좌표 비교
-					int temp_x = a[i][0];
-					int temp_y = a[i][1];
-					a[i][0] = a[j][0];
-					a[i][1] = a[j][1];
-					a[j][0] = temp_x;
-					a[j][1] = temp_y;
-				} 
-			}
-		}
 	}
 }
 
